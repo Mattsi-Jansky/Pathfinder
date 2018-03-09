@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Jansk.Pathfinding.Tests.Geography
+﻿namespace Jansk.Pathfinding.Tests.Geography
 {
-    public class Tile
+    public struct Tile
     {
         public int x;
         public int y;
@@ -27,6 +21,9 @@ namespace Jansk.Pathfinding.Tests.Geography
         {
             this.x = x;
             this.y = y;
+            this.z = 0;
+            IsBlocking = false;
+            IsStairs = false;
         }
 
         public override bool Equals(object obj)
