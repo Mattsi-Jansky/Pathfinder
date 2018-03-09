@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jansk.Pathfinding", "Jansk.Pathfinding.csproj", "{379A17EE-CC94-401F-8440-719D95CADD7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jansk.Pathfinding.Tests", "Jansk.Pathfinding.Tests\Jansk.Pathfinding.Tests.csproj", "{662A1362-F020-44B6-B212-969F036BE849}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{379A17EE-CC94-401F-8440-719D95CADD7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{379A17EE-CC94-401F-8440-719D95CADD7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{379A17EE-CC94-401F-8440-719D95CADD7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{662A1362-F020-44B6-B212-969F036BE849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{662A1362-F020-44B6-B212-969F036BE849}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{662A1362-F020-44B6-B212-969F036BE849}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{662A1362-F020-44B6-B212-969F036BE849}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
