@@ -47,7 +47,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Jansk.Pathfinding.csproj">
+    <ProjectReference Include="..\Pathfinding\Jansk.Pathfinding.csproj">
       <Project>{379a17ee-cc94-401f-8440-719d95cadd7c}</Project>
       <Name>Jansk.Pathfinding</Name>
     </ProjectReference>
