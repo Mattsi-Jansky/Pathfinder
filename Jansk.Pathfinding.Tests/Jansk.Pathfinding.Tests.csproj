@@ -43,7 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PathfindingTests.cs" />
+    <Compile Include="Geography\Tile.cs" />
+    <Compile Include="Geography\Maps\Map2D.cs" />
+    <Compile Include="Geography\Maps\Map3D.cs" />
+    <Compile Include="Tests\PathfindingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
