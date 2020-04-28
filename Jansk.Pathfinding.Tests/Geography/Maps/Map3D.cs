@@ -34,7 +34,7 @@ namespace Jansk.Pathfinding.Tests.Geography.Maps
 
         public Func<Tile, int> IndexMap()
         {
-            return tile => (tile.x * SizeX * SizeY) + (tile.y * SizeY) + tile.z;
+            return tile => (tile.z * SizeX * SizeY) + (tile.y * SizeY) + tile.x;
         }
 
         public Map3D(int sizeX, int sizeY, int sizeZ)
