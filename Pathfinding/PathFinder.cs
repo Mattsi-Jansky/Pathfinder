@@ -40,12 +40,13 @@ namespace Jansk.Pathfinding
             return GeneratePathFromGraph(startPosition, goalNode);
         }
 
-        public void BuildGraph(T startPosition, Func<Node<T>, bool> goalTest, Func<T, int> heuristic,
+        public Node<T>[] BuildGraph(T startPosition, Func<Node<T>, bool> goalTest, Func<T, int> heuristic,
             Func<T, IEnumerable<T>> neighbours, Func<T, int> indexMap)
         {
             this.neighbours = neighbours;
             this.indexMap = indexMap;
             BuildGraph(startPosition, goalTest, heuristic);
+            return Graph;
         }
 
         public void BuildGraph(T startPosition, Func<Node<T>, bool> goalTest, Func<T, int> heuristic)

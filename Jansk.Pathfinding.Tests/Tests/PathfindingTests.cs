@@ -6,13 +6,10 @@ using NUnit.Framework;
 
 namespace Jansk.Pathfinding.Tests.Tests
 {
-    public class PathfindingTests
+    public class PathfindingTests : BasePathfindingTest
     {
         private Map3D _map3D;
         private Map2D _map2D;
-
-        private readonly Func<Tile, Tile, int> _heuristic = (from, to) =>
-            Math.Abs(from.x - to.x) + Math.Abs(from.y + to.y) + Math.Abs(from.z + to.z);
 
         [Test]
         public void TwoDimensionalTest()
