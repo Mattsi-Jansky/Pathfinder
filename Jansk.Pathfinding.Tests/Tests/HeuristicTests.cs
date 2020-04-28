@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Jansk.Pathfinding.Tests.Geography;
 using Jansk.Pathfinding.Tests.Geography.Maps;
@@ -14,10 +15,9 @@ namespace Jansk.Pathfinding.Tests.Tests
             var pathFinder = new PathFinder<Tile>(_heuristic, 14 * 14);
             var goalPosition = map2D.Tiles[11, 12];
 
-            var graph = pathFinder.BuildGraph(map2D.Tiles[0, 0], generateGoalTest(goalPosition), _ => 0, map2D.Neighbours(), map2D.IndexMap());
-            //var graph = pathFinder.BuildGraph(map2D.Tiles[0, 0], generateGoalTest(goalPosition), position => _heuristic(position, goalPosition), map2D.Neighbours(), map2D.IndexMap());
+            var graph = pathFinder.BuildGraph(map2D.Tiles[0, 2], generateGoalTest(goalPosition), _ => 0, map2D.Neighbours(), map2D.IndexMap());
 
-            Assert.AreEqual(196, graph.Select(x => x != null).Count());
+            Assert.AreEqual(190, graph.Count(x => x != null));
         }
         
         [Test]
@@ -27,9 +27,10 @@ namespace Jansk.Pathfinding.Tests.Tests
             var pathFinder = new PathFinder<Tile>(_heuristic, 14 * 14);
             var goalPosition = map2D.Tiles[11, 12];
             
-            var graph = pathFinder.BuildGraph(map2D.Tiles[0, 0], generateGoalTest(goalPosition), position => _heuristic(position, goalPosition), map2D.Neighbours(), map2D.IndexMap());
+            var graph = pathFinder.BuildGraph(map2D.Tiles[0, 2], generateGoalTest(goalPosition), position => _heuristic(position, goalPosition), map2D.Neighbours(), map2D.IndexMap());
+            var test = graph.Where(x => x != null).Select(x => x.Heuristic).ToList();
 
-            Assert.AreNotEqual(196, graph.Select(x => x != null).Count());
+            Assert.AreEqual(185, graph.Count(x => x != null));
         }
     }
 }

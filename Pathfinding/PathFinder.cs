@@ -104,7 +104,7 @@ namespace Jansk.Pathfinding
                     {
                         var next = new Node<T>(neighbour) {Cost = newCost, Index = index};
                         Graph[next.Index] = next;
-                        if (next.Heuristic < 0 && heuristic != null) next.Heuristic = heuristic(neighbour);
+                        if (heuristic != null) next.Heuristic = heuristic(neighbour);
                         frontier.Enqueue(next, next.Cost + next.Heuristic);
 
                         next.Previous = node.Index;
