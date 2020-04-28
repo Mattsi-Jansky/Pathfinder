@@ -44,11 +44,11 @@ namespace Jansk.Pathfinding.Tests.Geography.Maps
             this.SizeZ = sizeZ;
             Tiles = new Tile[sizeX, sizeY, sizeZ];
 
-            for (int x = 0; x < sizeX; x++)
+            for (var x = 0; x < sizeX; x++)
             {
-                for (int y = 0; y < sizeY; y++)
+                for (var y = 0; y < sizeY; y++)
                 {
-                    for (int z = 0; z < sizeZ; z++)
+                    for (var z = 0; z < sizeZ; z++)
                     {
                         Tiles[x, y, z] = new Tile(x, y, z);
                     }

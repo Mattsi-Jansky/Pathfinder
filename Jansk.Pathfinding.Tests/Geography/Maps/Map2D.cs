@@ -38,9 +38,9 @@ namespace Jansk.Pathfinding.Tests.Geography.Maps
             this.SizeY = sizeY;
             Tiles = new Tile[sizeX, sizeY];
 
-            for (int x = 0; x < sizeX; x++)
+            for (var x = 0; x < sizeX; x++)
             {
-                for (int y = 0; y < sizeY; y++)
+                for (var y = 0; y < sizeY; y++)
                 {
                         Tiles[x, y] = new Tile(x, y);
                 }
