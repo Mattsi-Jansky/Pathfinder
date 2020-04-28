@@ -11,14 +11,14 @@ namespace Jansk.Pathfinding
         private Func<T, T, int> heuristic;
         private Func<T, IEnumerable<T>> neighbours;
         private Func<T, int> indexMap;
-        private int size;
+        private int maxNumberOfNodes;
 
         public const int MaximumPathLength = 650;
 
-        public PathFinder(Func<T, T, int> heuristic, int size)
+        public PathFinder(Func<T, T, int> heuristic, int maxNumberOfNodes)
         {
             this.heuristic = heuristic;
-            this.size = size;
+            this.maxNumberOfNodes = maxNumberOfNodes;
         }
 
         public T[] Path(T startPosition, T goalPosition, Func<T, int> indexMap, Func<T, IEnumerable<T>> neighbours)
@@ -51,7 +51,7 @@ namespace Jansk.Pathfinding
         public void BuildGraph(T startPosition, Func<Node<T>, bool> goalTest, Func<T, int> heuristic)
         {
             frontier = new FastPriorityQueue<Node<T>>(150);
-            Graph = new Node<T>[size];
+            Graph = new Node<T>[maxNumberOfNodes];
 
             var initial = new Node<T>(startPosition) {Index = indexMap(startPosition) };
             frontier.Enqueue(initial, 0);
@@ -95,7 +95,7 @@ namespace Jansk.Pathfinding
             {
                 var newCost = node.Cost + 1;
                 var index = indexMap(neighbour);
-                if (index >= 0 && index < size)
+                if (index >= 0 && index < maxNumberOfNodes)
                 {
                     var existingNeighbour = Graph[index];
 
