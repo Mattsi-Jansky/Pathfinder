@@ -12,16 +12,14 @@ namespace Jansk.Pathfinding.Tests.Tests
         private Map3D _map3D;
         private Map2D _map2D;
 
-        private Func<Tile, Tile, int> heuristic = delegate (Tile from, Tile to)
-        {
-            return Math.Abs(from.x - to.x) + Math.Abs(from.y + to.y) + Math.Abs(from.z + to.z);
-        };
+        private readonly Func<Tile, Tile, int> _heuristic = (from, to) =>
+            Math.Abs(from.x - to.x) + Math.Abs(from.y + to.y) + Math.Abs(from.z + to.z);
 
         [Test]
         public void TwoDimensionalTest()
         {
             _map2D = new Map2D(4,4);
-            var pathFinder = new PathFinder<Tile>(heuristic, (4 * 4 * 4) + (4 * 4) + 2);
+            var pathFinder = new PathFinder<Tile>(_heuristic, (4 * 4) + (4) + 2);
             _map2D.Tiles[0, 1].IsBlocking = true;
             _map2D.Tiles[2, 0].IsBlocking = true;
 
@@ -34,7 +32,7 @@ namespace Jansk.Pathfinding.Tests.Tests
         public void ThreeDimensionalTest()
         {
             _map3D = new Map3D(4, 4, 2);
-            var pathFinder = new PathFinder<Tile>(heuristic, (4*4*4)+(4*4)+2);
+            var pathFinder = new PathFinder<Tile>(_heuristic, (4*4*4)+(4*4)+2);
             _map3D.Tiles[3, 3, 0].IsStairs = true;
             _map3D.Tiles[3, 3, 1].IsStairs = true;
 
@@ -47,7 +45,7 @@ namespace Jansk.Pathfinding.Tests.Tests
         public void WhenImpossibleShouldReturnEmptyPath()
         {
             _map3D = new Map3D(4, 4, 1);
-            var pathFinder = new PathFinder<Tile>(heuristic, (4 * 4 * 4) + (4 * 4) + 1);
+            var pathFinder = new PathFinder<Tile>(_heuristic, (4 * 4 * 4) + (4 * 4) + 1);
             _map3D.Tiles[0, 1, 0].IsBlocking = true;
             _map3D.Tiles[1, 0, 0].IsBlocking = true;
 
@@ -61,7 +59,7 @@ namespace Jansk.Pathfinding.Tests.Tests
         public void TwoDimensionalLargeTest()
         {
             _map3D = new Map3D(20, 20, 1);
-            var pathFinder = new PathFinder<Tile>(heuristic, (20 * 20 * 20) + (20 * 20) + 1);
+            var pathFinder = new PathFinder<Tile>(_heuristic, (20 * 20 * 20) + (20 * 20) + 1);
 
             var path = pathFinder.Path(_map3D.Tiles[0, 0, 0], _map3D.Tiles[10, 19, 0], _map3D.IndexMap(), _map3D.Neighbours());
 
@@ -74,7 +72,7 @@ namespace Jansk.Pathfinding.Tests.Tests
             for (var i = 0; i < 4; i++)
             {
                 _map3D = new Map3D(20, 20, 1);
-                var pathFinder = new PathFinder<Tile>(heuristic, (20 * 20 * 20) + (20 * 20) + 1);
+                var pathFinder = new PathFinder<Tile>(_heuristic, (20 * 20 * 20) + (20 * 20) + 1);
 
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
