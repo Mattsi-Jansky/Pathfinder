@@ -59,22 +59,6 @@ namespace Jansk.Pathfinding
             return null;
         }
         
-        private T[] GeneratePathFromGraph(T startPosition, Node<T> goalNode)
-        {
-            var path = new List<T>();
-
-            var node = goalNode;
-            while (true)
-            {
-                if (node.Position.Equals(startPosition)) break;
-                path.Add(node.Position);
-                node = _graph[node.Previous];
-            }
-
-            path.Reverse();
-            return path.ToArray();
-        }
-        
         private void AddNeighbours(Node<T> node, Func<T,int> heuristic)
         {
             foreach (var neighbour in _neighbours(node.Position))
@@ -93,6 +77,22 @@ namespace Jansk.Pathfinding
                     }
                 }
             }
+        }
+        
+        private T[] GeneratePathFromGraph(T startPosition, Node<T> goalNode)
+        {
+            var path = new List<T>();
+
+            var node = goalNode;
+            while (true)
+            {
+                if (node.Position.Equals(startPosition)) break;
+                path.Add(node.Position);
+                node = _graph[node.Previous];
+            }
+
+            path.Reverse();
+            return path.ToArray();
         }
     }
 }
