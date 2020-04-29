@@ -13,8 +13,6 @@ namespace Jansk.Pathfinding
         private Func<T, int> indexMap;
         private int maxNumberOfNodes;
 
-        public const int MaximumPathLength = 650;
-
         public PathFinder(Func<T, T, int> heuristic, int maxNumberOfNodes)
         {
             this.heuristic = heuristic;
@@ -58,7 +56,7 @@ namespace Jansk.Pathfinding
             frontier.Enqueue(initial, 0);
             Graph[initial.Index] = initial;
 
-            while (frontier.Count > 0 && frontier.Count < MaximumPathLength)
+            while (frontier.Count > 0)
             {
                 var current = frontier.Dequeue();
 
