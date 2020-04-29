@@ -6,24 +6,24 @@ namespace Jansk.Pathfinding
 {
     public class PathFinder<T>
     {
-        private FastPriorityQueue<Node<T>> frontier;
-        public Node<T>[] Graph;
-        private Func<T, T, int> heuristic;
-        private Func<T, IEnumerable<T>> neighbours;
-        private Func<T, int> indexMap;
-        private int maxNumberOfNodes;
+        private FastPriorityQueue<Node<T>> _frontier;
+        private Node<T>[] _graph;
+        private readonly Func<T, T, int> _heuristic;
+        private Func<T, IEnumerable<T>> _neighbours;
+        private Func<T, int> _indexMap;
+        private readonly int _maxNumberOfNodes;
 
         public PathFinder(Func<T, T, int> heuristic, int maxNumberOfNodes)
         {
-            this.heuristic = heuristic;
-            this.maxNumberOfNodes = maxNumberOfNodes;
+            this._heuristic = heuristic;
+            this._maxNumberOfNodes = maxNumberOfNodes;
         }
 
         public T[] Path(T startPosition, T goalPosition, Func<T, int> indexMap, Func<T, IEnumerable<T>> neighbours)
         {
             Node<T> goalNode = null;
-            this.indexMap = indexMap;
-            this.neighbours = neighbours;
+            this._indexMap = indexMap;
+            this._neighbours = neighbours;
 
             BuildGraph(startPosition, delegate(Node<T> current)
             {
@@ -33,7 +33,7 @@ namespace Jansk.Pathfinding
                     return true;
                 }
                 return false;
-            }, position => heuristic(position, goalPosition));
+            }, position => _heuristic(position, goalPosition));
 
             return GeneratePathFromGraph(startPosition, goalNode);
         }
@@ -41,24 +41,24 @@ namespace Jansk.Pathfinding
         public Node<T>[] BuildGraph(T startPosition, Func<Node<T>, bool> goalTest, Func<T, int> heuristic,
             Func<T, IEnumerable<T>> neighbours, Func<T, int> indexMap)
         {
-            this.neighbours = neighbours;
-            this.indexMap = indexMap;
+            this._neighbours = neighbours;
+            this._indexMap = indexMap;
             BuildGraph(startPosition, goalTest, heuristic);
-            return Graph;
+            return _graph;
         }
 
         public void BuildGraph(T startPosition, Func<Node<T>, bool> goalTest, Func<T, int> heuristic)
         {
-            frontier = new FastPriorityQueue<Node<T>>(150);
-            Graph = new Node<T>[maxNumberOfNodes];
+            _frontier = new FastPriorityQueue<Node<T>>(150);
+            _graph = new Node<T>[_maxNumberOfNodes];
 
-            var initial = new Node<T>(startPosition) {Index = indexMap(startPosition) };
-            frontier.Enqueue(initial, 0);
-            Graph[initial.Index] = initial;
+            var initial = new Node<T>(startPosition) {Index = _indexMap(startPosition) };
+            _frontier.Enqueue(initial, 0);
+            _graph[initial.Index] = initial;
 
-            while (frontier.Count > 0)
+            while (_frontier.Count > 0)
             {
-                var current = frontier.Dequeue();
+                var current = _frontier.Dequeue();
 
                 if (goalTest(current))
                 {
@@ -80,7 +80,7 @@ namespace Jansk.Pathfinding
                 {
                     if (node.Position.Equals(startPosition)) break;
                     path.Add(node.Position);
-                    node = Graph[node.Previous];
+                    node = _graph[node.Previous];
                 }
             }
 
@@ -90,20 +90,20 @@ namespace Jansk.Pathfinding
 
         private void AddNeighbours(Node<T> node, Func<T,int> heuristic)
         {
-            foreach (var neighbour in neighbours(node.Position))
+            foreach (var neighbour in _neighbours(node.Position))
             {
                 var newCost = node.Cost + 1;
-                var index = indexMap(neighbour);
-                if (index >= 0 && index < maxNumberOfNodes)
+                var index = _indexMap(neighbour);
+                if (index >= 0 && index < _maxNumberOfNodes)
                 {
-                    var existingNeighbour = Graph[index];
+                    var existingNeighbour = _graph[index];
 
                     if (existingNeighbour == null || newCost < existingNeighbour.Cost)
                     {
                         var next = new Node<T>(neighbour) {Cost = newCost, Index = index};
-                        Graph[next.Index] = next;
+                        _graph[next.Index] = next;
                         if (heuristic != null) next.Heuristic = heuristic(neighbour);
-                        frontier.Enqueue(next, next.Cost + next.Heuristic);
+                        _frontier.Enqueue(next, next.Cost + next.Heuristic);
 
                         next.Previous = node.Index;
                     }
