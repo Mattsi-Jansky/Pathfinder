@@ -52,7 +52,7 @@ namespace Jansk.Pathfinding
             _frontier = new FastPriorityQueue<Node<T>>(150);
             _graph = new Node<T>[_maxNumberOfNodes];
 
-            var initial = new Node<T>(startPosition) {Index = _indexMap(startPosition) };
+            var initial = new Node<T>(startPosition, _indexMap(startPosition));
             _frontier.Enqueue(initial, 0);
             _graph[initial.Index] = initial;
 
@@ -97,12 +97,9 @@ namespace Jansk.Pathfinding
 
                     if (existingNeighbour == null || newCost < existingNeighbour.Cost)
                     {
-                        var next = new Node<T>(neighbour) {Cost = newCost, Index = index};
+                        var next = new Node<T>(neighbour, index, newCost, heuristic(neighbour), node.Index);
                         _graph[next.Index] = next;
-                        if (heuristic != null) next.Heuristic = heuristic(neighbour);
                         _frontier.Enqueue(next, next.Cost + next.Heuristic);
-
-                        next.Previous = node.Index;
                     }
                 }
             }
