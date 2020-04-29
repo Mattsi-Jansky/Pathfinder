@@ -35,7 +35,7 @@ namespace Jansk.Pathfinding
                 return false;
             }, position => _heuristic(position, goalPosition));
 
-            return GeneratePathFromGraph(startPosition, goalNode);
+            return goalNode != null ? GeneratePathFromGraph(startPosition, goalNode) : new T[0];
         }
 
         public Node<T>[] BuildGraph(T startPosition, Func<Node<T>, bool> goalTest, Func<T, int> heuristic,
@@ -73,15 +73,12 @@ namespace Jansk.Pathfinding
         {
             var path = new List<T>();
 
-            if (goalNode != null)
+            var node = goalNode;
+            while (true)
             {
-                var node = goalNode;
-                while (true)
-                {
-                    if (node.Position.Equals(startPosition)) break;
-                    path.Add(node.Position);
-                    node = _graph[node.Previous];
-                }
+                if (node.Position.Equals(startPosition)) break;
+                path.Add(node.Position);
+                node = _graph[node.Previous];
             }
 
             path.Reverse();
