@@ -17,7 +17,7 @@ namespace Jansk.Pathfinding.Tests.Tests
 
             var graph = pathFinder.BuildGraph(map2D.Tiles[0, 2], generateGoalTest(goalPosition), _ => 0, map2D.Neighbours(), map2D.IndexMap());
 
-            Assert.AreEqual(190, graph.Count(x => x != null));
+            Assert.AreEqual(192, graph.Count(x => x != null));
         }
         
         [Test]
@@ -30,7 +30,7 @@ namespace Jansk.Pathfinding.Tests.Tests
             var graph = pathFinder.BuildGraph(map2D.Tiles[0, 2], generateGoalTest(goalPosition), position => _heuristic(position, goalPosition), map2D.Neighbours(), map2D.IndexMap());
             var test = graph.Where(x => x != null).Select(x => x.Heuristic).ToList();
 
-            Assert.AreEqual(185, graph.Count(x => x != null));
+            Assert.AreEqual(155, graph.Count(x => x != null));
         }
     }
 }
