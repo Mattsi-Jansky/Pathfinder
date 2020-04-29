@@ -15,15 +15,15 @@ namespace Jansk.Pathfinding
 
         public PathFinder(Func<T, T, int> heuristic, int maxNumberOfNodes)
         {
-            this._heuristic = heuristic;
-            this._maxNumberOfNodes = maxNumberOfNodes;
+            _heuristic = heuristic;
+            _maxNumberOfNodes = maxNumberOfNodes;
         }
 
         public T[] Path(T startPosition, T goalPosition, Func<T, int> indexMap, Func<T, IEnumerable<T>> neighbours)
         {
             Node<T> goalNode = null;
-            this._indexMap = indexMap;
-            this._neighbours = neighbours;
+            _indexMap = indexMap;
+            _neighbours = neighbours;
 
             BuildGraph(startPosition, delegate(Node<T> current)
             {
@@ -41,8 +41,8 @@ namespace Jansk.Pathfinding
         public Node<T>[] BuildGraph(T startPosition, Func<Node<T>, bool> goalTest, Func<T, int> heuristic,
             Func<T, IEnumerable<T>> neighbours, Func<T, int> indexMap)
         {
-            this._neighbours = neighbours;
-            this._indexMap = indexMap;
+            _neighbours = neighbours;
+            _indexMap = indexMap;
             BuildGraph(startPosition, goalTest, heuristic);
             return _graph;
         }
