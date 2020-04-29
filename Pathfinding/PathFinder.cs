@@ -21,33 +21,24 @@ namespace Jansk.Pathfinding
 
         public T[] Path(T startPosition, T goalPosition, Func<T, int> indexMap, Func<T, IEnumerable<T>> neighbours)
         {
-            Node<T> goalNode = null;
             _indexMap = indexMap;
             _neighbours = neighbours;
 
-            BuildGraph(startPosition, delegate(Node<T> current)
-            {
-                if (current.Position.Equals(goalPosition))
-                {
-                    goalNode = current;
-                    return true;
-                }
-                return false;
-            }, position => _heuristic(position, goalPosition));
+            var goalNode = BuildGraph(startPosition, goalPosition, position => _heuristic(position, goalPosition));
 
             return goalNode != null ? GeneratePathFromGraph(startPosition, goalNode) : new T[0];
         }
 
-        public Node<T>[] BuildGraph(T startPosition, Func<Node<T>, bool> goalTest, Func<T, int> heuristic,
+        public Node<T>[] BuildGraph(T startPosition, T goalPosition, Func<T, int> heuristic,
             Func<T, IEnumerable<T>> neighbours, Func<T, int> indexMap)
         {
             _neighbours = neighbours;
             _indexMap = indexMap;
-            BuildGraph(startPosition, goalTest, heuristic);
+            BuildGraph(startPosition, goalPosition, heuristic);
             return _graph;
         }
 
-        public void BuildGraph(T startPosition, Func<Node<T>, bool> goalTest, Func<T, int> heuristic)
+        public Node<T> BuildGraph(T startPosition, T goalPosition, Func<T, int> heuristic)
         {
             _frontier = new FastPriorityQueue<Node<T>>(150);
             _graph = new Node<T>[_maxNumberOfNodes];
@@ -60,13 +51,15 @@ namespace Jansk.Pathfinding
             {
                 var current = _frontier.Dequeue();
 
-                if (goalTest(current))
+                if (current.Position.Equals((goalPosition)))
                 {
-                    break;
+                    return current;
                 }
 
                 AddNeighbours(current, heuristic);
             }
+
+            return null;
         }
 
         private T[] GeneratePathFromGraph(T startPosition, Node<T> goalNode)

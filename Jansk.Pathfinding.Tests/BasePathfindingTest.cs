@@ -7,10 +7,5 @@ namespace Jansk.Pathfinding.Tests
     {
         protected readonly Func<Tile, Tile, int> _heuristic = (from, to) =>
             Math.Abs(from.x - to.x) + Math.Abs(from.y - to.y) + Math.Abs(from.z - to.z);
-
-        protected Func<Node<Tile>, bool> generateGoalTest(Tile goal)
-        {
-            return (node) => node.Position.Equals(goal);
-        }
     }
 }
