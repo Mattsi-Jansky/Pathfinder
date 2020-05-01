@@ -5,10 +5,10 @@ namespace Jansk.Pathfinding.Tests.Geography.Maps
 {
     public class Map3D
     {
-        public int SizeX;
-        public int SizeY;
-        public int SizeZ;
-        public Tile[,,] Tiles;
+        private readonly int _sizeX;
+        private readonly int _sizeY;
+        private readonly int _sizeZ;
+        public readonly Tile[,,] Tiles;
 
         public Func<Tile, Tile[]> Neighbours()
         {
@@ -17,15 +17,15 @@ namespace Jansk.Pathfinding.Tests.Geography.Maps
                 var neighbours = new List<Tile>();
                 if (tile.x - 1 >= 0 && !Tiles[tile.x - 1, tile.y, tile.z].IsBlocking)
                     neighbours.Add(Tiles[tile.x - 1, tile.y, tile.z]);
-                if (tile.x + 1 < SizeX && !Tiles[tile.x + 1, tile.y, tile.z].IsBlocking)
+                if (tile.x + 1 < _sizeX && !Tiles[tile.x + 1, tile.y, tile.z].IsBlocking)
                     neighbours.Add(Tiles[tile.x + 1, tile.y, tile.z]);
-                if (tile.y + 1 < SizeY && !Tiles[tile.x, tile.y + 1, tile.z].IsBlocking)
+                if (tile.y + 1 < _sizeY && !Tiles[tile.x, tile.y + 1, tile.z].IsBlocking)
                     neighbours.Add(Tiles[tile.x, tile.y + 1, tile.z]);
                 if (tile.y - 1 >= 0 && !Tiles[tile.x, tile.y - 1, tile.z].IsBlocking)
                     neighbours.Add(Tiles[tile.x, tile.y - 1, tile.z]);
                 if (tile.z - 1 >= 0 && Tiles[tile.x, tile.y, tile.z - 1].IsStairs)
                     neighbours.Add(Tiles[tile.x, tile.y, tile.z - 1]);
-                if (tile.z + 1 < SizeZ && Tiles[tile.x, tile.y, tile.z + 1].IsStairs)
+                if (tile.z + 1 < _sizeZ && Tiles[tile.x, tile.y, tile.z + 1].IsStairs)
                     neighbours.Add(Tiles[tile.x, tile.y, tile.z + 1]);
 
                 return neighbours.ToArray();
@@ -34,14 +34,14 @@ namespace Jansk.Pathfinding.Tests.Geography.Maps
 
         public Func<Tile, int> IndexMap()
         {
-            return tile => (tile.z * SizeX * SizeY) + (tile.y * SizeY) + tile.x;
+            return tile => (tile.z * _sizeX * _sizeY) + (tile.y * _sizeY) + tile.x;
         }
 
         public Map3D(int sizeX, int sizeY, int sizeZ)
         {
-            this.SizeX = sizeX;
-            this.SizeY = sizeY;
-            this.SizeZ = sizeZ;
+            _sizeX = sizeX;
+            _sizeY = sizeY;
+            _sizeZ = sizeZ;
             Tiles = new Tile[sizeX, sizeY, sizeZ];
 
             for (var x = 0; x < sizeX; x++)

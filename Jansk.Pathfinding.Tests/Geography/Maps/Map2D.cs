@@ -5,9 +5,9 @@ namespace Jansk.Pathfinding.Tests.Geography.Maps
 {
     public class Map2D
     {
-        public int SizeX;
-        public int SizeY;
-        public Tile[,] Tiles;
+        private readonly int _sizeX;
+        private readonly int _sizeY;
+        public readonly Tile[,] Tiles;
 
         public Func<Tile, Tile[]> Neighbours()
         {
@@ -16,9 +16,9 @@ namespace Jansk.Pathfinding.Tests.Geography.Maps
                 var neighbours = new List<Tile>();
                 if (tile.x - 1 >= 0 && !Tiles[tile.x - 1, tile.y].IsBlocking)
                     neighbours.Add(Tiles[tile.x - 1, tile.y]);
-                if (tile.x + 1 < SizeX && !Tiles[tile.x + 1, tile.y].IsBlocking)
+                if (tile.x + 1 < _sizeX && !Tiles[tile.x + 1, tile.y].IsBlocking)
                     neighbours.Add(Tiles[tile.x + 1, tile.y]);
-                if (tile.y + 1 < SizeY && !Tiles[tile.x, tile.y + 1].IsBlocking)
+                if (tile.y + 1 < _sizeY && !Tiles[tile.x, tile.y + 1].IsBlocking)
                     neighbours.Add(Tiles[tile.x, tile.y + 1]);
                 if (tile.y - 1 >= 0 && !Tiles[tile.x, tile.y - 1].IsBlocking)
                     neighbours.Add(Tiles[tile.x, tile.y - 1]);
@@ -29,13 +29,13 @@ namespace Jansk.Pathfinding.Tests.Geography.Maps
 
         public Func<Tile, int> IndexMap()
         {
-            return tile => (tile.x * SizeX) + tile.y;
+            return tile => (tile.x * _sizeX) + tile.y;
         }
 
         public Map2D(int sizeX, int sizeY)
         {
-            this.SizeX = sizeX;
-            this.SizeY = sizeY;
+            _sizeX = sizeX;
+            _sizeY = sizeY;
             Tiles = new Tile[sizeX, sizeY];
 
             for (var x = 0; x < sizeX; x++)
