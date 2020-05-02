@@ -13,7 +13,7 @@ namespace Jansk.Pathfinding.Tests.Geography.Maps
 
         public Func<Tile, Tile[]> NeighboursManhattan()
         {
-            Func<Tile, bool> isValid = tile => tile.x >= 0 && tile.y >= 0 && tile.x < _sizeX && tile.y < _sizeY;
+            bool IsValid(Tile tile) => tile.x >= 0 && tile.y >= 0 && tile.x < _sizeX && tile.y < _sizeY;
             return delegate (Tile tile)
             {
                 var neighbours = new List<Tile>()
@@ -22,7 +22,7 @@ namespace Jansk.Pathfinding.Tests.Geography.Maps
                     tile.Translate(-1, 0),
                     tile.Translate(0, 1),
                     tile.Translate(0, -1),
-                }.Where(isValid);
+                }.Where(IsValid);
 
                 return neighbours.ToArray();
             };
@@ -30,7 +30,7 @@ namespace Jansk.Pathfinding.Tests.Geography.Maps
         
         public Func<Tile, Tile[]> NeighboursManhattanAndDiagonal()
         {
-            Func<Tile, bool> isValid = tile => tile.x >= 0 && tile.y >= 0 && tile.x < _sizeX && tile.y < _sizeY;
+            bool IsValid(Tile tile) => tile.x >= 0 && tile.y >= 0 && tile.x < _sizeX && tile.y < _sizeY;
             return delegate (Tile tile)
             {
                 var neighbours = new List<Tile>()
@@ -44,7 +44,7 @@ namespace Jansk.Pathfinding.Tests.Geography.Maps
                     tile.Translate(-1, -1),
                     tile.Translate(-1, 1),
                     tile.Translate(1, -1),
-                }.Where(isValid);
+                }.Where(IsValid);
 
                 return neighbours.ToArray();
             };
