@@ -7,10 +7,10 @@ namespace Jansk.Pathfinding
         public readonly T Position;
         public readonly int Previous;
         public readonly int Cost;
-        public readonly int Heuristic;
+        public readonly float Heuristic;
         public readonly int Index;
 
-        public Node(T position, int index, int cost = 0, int heuristic = 0, int previous = 0)
+        public Node(T position, int index, int cost = 0, float heuristic = 0, int previous = 0)
         {
             Position = position;
             Index = index;

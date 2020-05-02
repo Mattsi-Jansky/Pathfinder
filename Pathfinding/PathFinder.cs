@@ -8,13 +8,13 @@ namespace Jansk.Pathfinding
     {
         private FastPriorityQueue<Node<T>> _frontier;
         private Node<T>[] _graph;
-        private readonly Func<T, T, int> _heuristic;
+        private readonly Func<T, T, float> _heuristic;
         private readonly Func<T, IEnumerable<T>> _neighbours;
         private readonly Func<T, int> _indexMap;
         private readonly int _maxNumberOfNodes;
         private readonly Action<Node<T>[]> _debug;
 
-        public PathFinder(Func<T, T, int> heuristic, int maxNumberOfNodes, Func<T, int> indexMap, Func<T, IEnumerable<T>> neighbours, Action<Node<T>[]> debug = null)
+        public PathFinder(Func<T, T, float> heuristic, int maxNumberOfNodes, Func<T, int> indexMap, Func<T, IEnumerable<T>> neighbours, Action<Node<T>[]> debug = null)
         {
             _heuristic = heuristic;
             _maxNumberOfNodes = maxNumberOfNodes;
@@ -40,7 +40,7 @@ namespace Jansk.Pathfinding
         {
             _frontier = new FastPriorityQueue<Node<T>>(150);
             _graph = new Node<T>[_maxNumberOfNodes];
-            var heuristic = new Func<T,int>(position => _heuristic(position, goalPosition));
+            var heuristic = new Func<T,float>(position => _heuristic(position, goalPosition));
 
             var initial = new Node<T>(startPosition, _indexMap(startPosition));
             _frontier.Enqueue(initial, 0);
@@ -63,7 +63,7 @@ namespace Jansk.Pathfinding
             return null;
         }
         
-        private void AddNeighbours(Node<T> node, Func<T,int> heuristic)
+        private void AddNeighbours(Node<T> node, Func<T,float> heuristic)
         {
             foreach (var neighbour in _neighbours(node.Position))
             {
