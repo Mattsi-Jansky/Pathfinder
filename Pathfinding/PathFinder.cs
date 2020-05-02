@@ -12,13 +12,15 @@ namespace Jansk.Pathfinding
         private readonly Func<T, IEnumerable<T>> _neighbours;
         private readonly Func<T, int> _indexMap;
         private readonly int _maxNumberOfNodes;
+        private readonly Action<Node<T>[]> _debug;
 
-        public PathFinder(Func<T, T, int> heuristic, int maxNumberOfNodes, Func<T, int> indexMap, Func<T, IEnumerable<T>> neighbours)
+        public PathFinder(Func<T, T, int> heuristic, int maxNumberOfNodes, Func<T, int> indexMap, Func<T, IEnumerable<T>> neighbours, Action<Node<T>[]> debug = null)
         {
             _heuristic = heuristic;
             _maxNumberOfNodes = maxNumberOfNodes;
             _indexMap = indexMap;
             _neighbours = neighbours;
+            _debug = debug;
         }
 
         public T[] Path(T startPosition, T goalPosition)
@@ -54,6 +56,8 @@ namespace Jansk.Pathfinding
                 }
 
                 AddNeighbours(current, heuristic);
+
+                _debug?.Invoke(_graph);
             }
 
             return null;
