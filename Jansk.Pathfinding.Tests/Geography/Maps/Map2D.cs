@@ -11,19 +11,40 @@ namespace Jansk.Pathfinding.Tests.Geography.Maps
         private readonly int _sizeY;
         public readonly Tile[,] Tiles;
 
-        public Func<Tile, Tile[]> Neighbours()
+        public Func<Tile, Tile[]> NeighboursManhattan()
         {
+            Func<Tile, bool> isValid = tile => tile.x >= 0 && tile.y >= 0 && tile.x < _sizeX && tile.y < _sizeY;
             return delegate (Tile tile)
             {
-                var neighbours = new List<Tile>();
-                if (tile.x - 1 >= 0 && !Tiles[tile.x - 1, tile.y].IsBlocking)
-                    neighbours.Add(Tiles[tile.x - 1, tile.y]);
-                if (tile.x + 1 < _sizeX && !Tiles[tile.x + 1, tile.y].IsBlocking)
-                    neighbours.Add(Tiles[tile.x + 1, tile.y]);
-                if (tile.y + 1 < _sizeY && !Tiles[tile.x, tile.y + 1].IsBlocking)
-                    neighbours.Add(Tiles[tile.x, tile.y + 1]);
-                if (tile.y - 1 >= 0 && !Tiles[tile.x, tile.y - 1].IsBlocking)
-                    neighbours.Add(Tiles[tile.x, tile.y - 1]);
+                var neighbours = new List<Tile>()
+                {
+                    tile.Translate(1, 0),
+                    tile.Translate(-1, 0),
+                    tile.Translate(0, 1),
+                    tile.Translate(0, -1),
+                }.Where(isValid);
+
+                return neighbours.ToArray();
+            };
+        }
+        
+        public Func<Tile, Tile[]> NeighboursManhattanAndDiagonal()
+        {
+            Func<Tile, bool> isValid = tile => tile.x >= 0 && tile.y >= 0 && tile.x < _sizeX && tile.y < _sizeY;
+            return delegate (Tile tile)
+            {
+                var neighbours = new List<Tile>()
+                {
+                    tile.Translate(1, 0),
+                    tile.Translate(-1, 0),
+                    tile.Translate(0, 1),
+                    tile.Translate(0, -1),
+                    
+                    tile.Translate(1, 1),
+                    tile.Translate(-1, -1),
+                    tile.Translate(-1, 1),
+                    tile.Translate(1, -1),
+                }.Where(isValid);
 
                 return neighbours.ToArray();
             };

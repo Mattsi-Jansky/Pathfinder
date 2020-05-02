@@ -31,5 +31,10 @@
             var t = (Tile)obj;
             return t.x == x && t.y == y && t.z == z;
         }
+
+        public Tile Translate(int x, int y)
+        {
+            return new Tile(this.x + x, this.y + y);
+        }
     }
 }

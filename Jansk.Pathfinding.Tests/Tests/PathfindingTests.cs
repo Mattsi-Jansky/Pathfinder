@@ -15,7 +15,7 @@ namespace Jansk.Pathfinding.Tests.Tests
         public void TwoDimensionalTest()
         {
             _map2D = new Map2D(4,4);
-            var pathFinder = new PathFinder<Tile>(_heuristic, 4 * 4, _map2D.IndexMap(), _map2D.Neighbours());
+            var pathFinder = new PathFinder<Tile>(_heuristic, 4 * 4, _map2D.IndexMap(), _map2D.NeighboursManhattan());
             _map2D.Tiles[0, 1].IsBlocking = true;
             _map2D.Tiles[2, 0].IsBlocking = true;
 
@@ -55,7 +55,7 @@ namespace Jansk.Pathfinding.Tests.Tests
         public void TwoDimensionalLargeTest()
         {
             _map2D = new Map2D(20, 20);
-            var pathFinder = new PathFinder<Tile>(_heuristic, 20 * 20, _map2D.IndexMap(), _map2D.Neighbours());
+            var pathFinder = new PathFinder<Tile>(_heuristic, 20 * 20, _map2D.IndexMap(), _map2D.NeighboursManhattan());
 
             var path = pathFinder.Path(_map2D.Tiles[0, 0], _map2D.Tiles[19, 19]);
 
