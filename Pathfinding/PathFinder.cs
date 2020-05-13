@@ -88,9 +88,8 @@ namespace Jansk.Pathfinding
             var path = new List<T>();
 
             var node = goalNode;
-            while (true)
+            while (!node.Position.Equals(startPosition))
             {
-                if (node.Position.Equals(startPosition)) break;
                 path.Add(node.Position);
                 node = _graph[node.Previous];
             }
